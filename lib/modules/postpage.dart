@@ -12,6 +12,20 @@ class PostPage extends StatefulWidget {
 class _PostPageState extends State<PostPage> {
   final TextEditingController post=new TextEditingController();
   @override
+  void sendPost() async
+  {
+    SharedPreferences prefered=await SharedPreferences.getInstance();
+    String userId=prefered.getString("userId")?? "";
+    final response=await PostApiService().addPost(userId, post.text);
+    if(response["status"]=="success")
+      {
+        print("successfully posted");
+      }
+    else
+      {
+        print("Failed to post");
+      }
+  }
   // void addPost() async
   // {
   //   // SharedPreferences prefer=await SharedPreferences.getInstance();
@@ -41,7 +55,7 @@ class _PostPageState extends State<PostPage> {
                     border: OutlineInputBorder()
                   ),
                 ),
-                // ElevatedButton(onPressed: addPost, child: Text("Add Post")),
+                ElevatedButton(onPressed: sendPost, child: Text("Add Post")),
                 ElevatedButton(onPressed: (){
                   Navigator.pop(context);
                 }, child: Text("Log Out"))

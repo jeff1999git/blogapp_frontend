@@ -33,25 +33,25 @@ class Post {
 }
 
 class UserId {
-  String name;
-  String mobile;
-  String address;
+  String userName;
+  String userPhone;
+  String userEmail;
 
   UserId({
-    required this.name,
-    required this.mobile,
-    required this.address,
+    required this.userName,
+    required this.userPhone,
+    required this.userEmail,
   });
 
   factory UserId.fromJson(Map<String, dynamic> json) => UserId(
-    name: json["name"],
-    mobile: json["mobile"],
-    address: json["address"],
+    userName: json["userName"],
+    userPhone: json["userPhone"],
+    userEmail: json["userEmail"],
   );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "mobile": mobile,
-    "address": address,
+    "userName": userName,
+    "userPhone": userPhone,
+    "userEmail": userEmail,
   };
 }

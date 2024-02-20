@@ -1,5 +1,6 @@
 import 'package:blogapp_frontend/modules/adduserpage.dart';
 import 'package:blogapp_frontend/modules/postpage.dart';
+import 'package:blogapp_frontend/modules/viewpost.dart';
 import 'package:blogapp_frontend/modules/viewuserpage.dart';
 import 'package:blogapp_frontend/services/userservices.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,10 @@ class _HomePageState extends State<HomePage> {
     final response=await UserApiService().signInData(username.text, password.text);
     if(response["status"]=="success")
     {
-      // String userId=response["userdata"]["_id"].toString();
-      // SharedPreferences preferences=await SharedPreferences.getInstance();
-      // preferences.setString("userId", userId);
+      String userId=response["userdata"]["_id"].toString();
+      SharedPreferences.setMockInitialValues({});
+      SharedPreferences prefer=await SharedPreferences.getInstance();
+      prefer.setString("userId", userId);
       print("Successful Login");
       Navigator.push(context, MaterialPageRoute(
           builder: (context)=>PostPage()
@@ -59,6 +61,7 @@ class _HomePageState extends State<HomePage> {
             ),
             TextField(
               controller: password,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: "Password",
                 hintText: "Enter your password",
@@ -74,7 +77,11 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewUserPage()));
             },
-                child: Text("View User"))
+                child: Text("View User")),
+            ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPage()));
+            },
+                child: Text("View Post")),
           ],
         ),
       ),
